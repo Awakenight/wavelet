@@ -1,31 +1,32 @@
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 
 class Handler implements URLHandler {
     ArrayList<String> words = new ArrayList<String>();
 
     public String handleRequest(URI url) {
         System.out.println("Path: " + url.getPath());
-        if (url.getPath().contains(s: "/add")) {
-            String[] parameters = url.getQuery().split(regex: "=");
-            if (parameters[0].equals(anObject: "s")) {
-                words.add(index: 0, parameters[1]);
+        if (url.getPath().contains("/add")) {
+            String[] parameters = url.getQuery().split("=");
+            if (parameters[0].equals("s")) {
+                words.add(0, parameters[1]);
                 return parameters[1] + " added";
             }
         }
-        else if (url.getPath().contains(s: "/search")) {
-            String[] parameters = url.getQuery().split(regex: "=");
+        else if (url.getPath().contains("/search")) {
+            String[] parameters = url.getQuery().split("=");
             ArrayList<String> chosenWords = new ArrayList<String>();
-            if (parameters[0].equals(anObject: "s" )) {
+            if (parameters[0].equals("s")) {
                 for (int i = 0; i < words.size(); i++) {
                     if (words.get(i).contains(parameters[1])) {
-                        chosenWords.add(index: 0, words.get(i));
+                        chosenWords.add(0, words.get(i));
                     }
                 }
             }
             return chosenWords.toString();
         }
-        else if (url.getPath.equals(anObject: "/")) {
+        else if (url.getPath().equals("/")) {
             return "Please add a word or search with keywords!";
         } else {
             return "404 Not Found!";
